@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/TileMap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/Main.gd" type="Script" id=3]
+
+[node name="Main" type="Node"]
+script = ExtResource( 3 )
+min_distance = 300
+
+[node name="TileMap" parent="." instance=ExtResource( 2 )]
+tile_data = PoolIntArray( 655359, 1, 0, 589824, 1, 0, 589825, 1, 0, 589826, 1, 0, 589827, 1, 0, 589828, 1, 0, 589829, 1, 0, 589830, 1, 0 )
+
+[node name="PlatformSpawner" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Platforms" type="Node" parent="."]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 187, 63 )
+collision/safe_margin = 0.01
+GRAVITY = 800
+JUMP_SPEED = 500
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+limit_left = 0
+limit_right = 360
+limit_bottom = 640
+limit_smoothed = true
+smoothing_enabled = true
+[connection signal="timeout" from="PlatformSpawner" to="." method="_on_PlatformSpawner_timeout"]
