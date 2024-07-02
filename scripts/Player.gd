@@ -9,6 +9,7 @@ const WALK_MAX_SPEED = 200
 var velocity = Vector2.ZERO
 var direction = Vector2.ZERO
 
+signal jumping
 
 func get_inputs():
 	if Input.is_action_pressed("right"):
@@ -24,6 +25,7 @@ func get_inputs():
 	
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y = -JUMP_SPEED
+		emit_signal("jumping")
 
 func swap_anim():
 	if not(is_on_floor()):
