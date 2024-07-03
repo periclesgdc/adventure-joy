@@ -21,11 +21,19 @@ func _ready():
 
 func init_platforms():
 	for y in range(0, 10):
-		var new_platform = create_platform(Vector2(0, -200 * y - 100))
+		var new_platform = create_platform(Vector2(randomize_spawner_position(), -200 * y - 100))
 		add_child(new_platform)
 
+func randomize_spawner_position():
+	randomize()
+	var random_value = randi()
+	seed(random_value)
+	
+	return platform_width * (random_value % 5) + 53
 
 func spawn_platform():
+	spawn_line.position.x = randomize_spawner_position()
+	
 	var new_platform = create_platform(spawn_line.position)
 	
 	new_platform.spawn_collectible_item = !bool(randi() % 5)
@@ -33,10 +41,7 @@ func spawn_platform():
 	add_child_below_node($Platforms, new_platform)
 
 func create_platform(plat_position: Vector2):
-	position_seed = rand_seed(OS.get_unix_time())[1]
 	var new_platform = platform01.instance()
-	plat_position.x = platform_width * (randi() % 5) + 53
-	
 	
 	new_platform.position = plat_position
 	new_platform.fall_speed = min_platform_speed
