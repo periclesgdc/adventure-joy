@@ -11,6 +11,7 @@ var direction = Vector2.ZERO
 
 signal jumping
 signal collected
+signal died
 
 func get_inputs():
 	if Input.is_action_pressed("right"):
@@ -23,7 +24,7 @@ func get_inputs():
 		direction.x = 0
 
 func swap_anim():
-	if not(is_on_floor()):
+	if not(is_on_floor()) and not(is_on_ceiling()):
 		$Animations.play("jump")
 	elif direction.x:
 		$Animations.play("walk")
@@ -46,6 +47,10 @@ func _physics_process(delta):
 	
 	if is_on_ceiling():
 		velocity.y = 0
+#	Verificar validade desse ponto
+	if is_on_ceiling() and is_on_floor():
+		print('morreu')
+		emit_signal("died")
 
 	velocity = move_and_slide(velocity, Vector2.UP)
 
