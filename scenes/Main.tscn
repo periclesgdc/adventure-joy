@@ -1,15 +1,72 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/TileMap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Main.gd" type="Script" id=3]
+[ext_resource path="res://sprites/Tiles/platformPack_tile004.png" type="Texture" id=4]
+[ext_resource path="res://sprites/Preview.png" type="Texture" id=5]
+[ext_resource path="res://fonts/LuckiestGuy-Regular.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="TileSet" id=2]
+0/name = "Preview.png 0"
+0/texture = ExtResource( 5 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 64, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="TileSet" id=1]
+0/name = "platformPack_tile004.png 0"
+0/texture = ExtResource( 4 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="DynamicFont" id=3]
+size = 21
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 35
+font_data = ExtResource( 6 )
 
 [node name="Main" type="Node"]
 script = ExtResource( 3 )
 min_platform_speed = 100
 
-[node name="TileMap" parent="." instance=ExtResource( 2 )]
-tile_data = PoolIntArray( 655359, 1, 0, 589824, 1, 0, 589825, 1, 0, 589826, 1, 0, 589827, 1, 0, 589828, 1, 0, 589829, 1, 0, 589830, 1, 0 )
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Bg" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 0, 600 )
+
+[node name="TileBg" type="TileMap" parent="ParallaxBackground/Bg"]
+position = Vector2( 21, 0 )
+tile_set = SubResource( 2 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 196612, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 589824, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0, 589828, 0, 0 )
+
+[node name="Walls" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 0, 600 )
+
+[node name="SideWalls" type="TileMap" parent="ParallaxBackground/Walls"]
+position = Vector2( 21, 0 )
+tile_set = SubResource( 1 )
+collision_layer = 2
+format = 1
+tile_data = PoolIntArray( 65535, 0, 0, 5, 0, 0, 131071, 0, 0, 65541, 0, 0, 196607, 0, 0, 131077, 0, 0, 262143, 0, 0, 196613, 0, 0, 327679, 0, 0, 262149, 0, 0, 393215, 0, 0, 327685, 0, 0, 458751, 0, 0, 393221, 0, 0, 524287, 0, 0, 458757, 0, 0, 589823, 0, 0, 524293, 0, 0, 655359, 0, 0, 589829, 0, 0, 720895, 0, 0, 655365, 0, 0 )
+
+[node name="BaseFloor" parent="." instance=ExtResource( 2 )]
+position = Vector2( 21, 0 )
+tile_data = PoolIntArray( 655359, 1, 0, 589824, 1, 0, 589825, 1, 0, 589826, 1, 0, 589827, 1, 0, 589828, 1, 0, 589829, 1, 0 )
 
 [node name="PlatformSpawner" type="Timer" parent="."]
 wait_time = 2.0
@@ -31,5 +88,39 @@ limit_right = 360
 limit_bottom = 640
 limit_smoothed = true
 smoothing_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+grow_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Control"]
+margin_left = 26.7926
+margin_top = 15.0
+margin_right = 76.7926
+margin_bottom = 32.0
+custom_fonts/font = SubResource( 3 )
+text = "Score:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreValue" type="Label" parent="CanvasLayer/Control"]
+margin_left = 97.9735
+margin_top = 10.1232
+margin_right = 137.974
+margin_bottom = 46.1232
+custom_fonts/font = SubResource( 4 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="timeout" from="PlatformSpawner" to="." method="_on_PlatformSpawner_timeout"]
+[connection signal="collected" from="Player" to="." method="_on_Player_collected"]
 [connection signal="jumping" from="Player" to="." method="_on_Player_jumping"]

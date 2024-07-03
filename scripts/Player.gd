@@ -10,6 +10,7 @@ var velocity = Vector2.ZERO
 var direction = Vector2.ZERO
 
 signal jumping
+signal collected
 
 func get_inputs():
 	if Input.is_action_pressed("right"):
@@ -21,12 +22,6 @@ func get_inputs():
 	else:
 		direction.x = 0
 
-	velocity.x = direction.x * min(abs(velocity.x) + WALK_MIN_SPEED, WALK_MAX_SPEED)
-	
-	if is_on_floor() and Input.is_action_just_pressed("jump"):
-		velocity.y = -JUMP_SPEED
-		emit_signal("jumping")
-
 func swap_anim():
 	if not(is_on_floor()):
 		$Animations.play("jump")
@@ -35,11 +30,23 @@ func swap_anim():
 	else:
 		$Animations.play("idle")
 
-func _physics_process(delta):
-	velocity.y += GRAVITY * delta
+func collect_item():
+	emit_signal("collected")
 
+func _physics_process(delta):
 	get_inputs()
 	swap_anim()
+	
+	velocity.y += GRAVITY * delta
+	velocity.x = direction.x * min(abs(velocity.x) + WALK_MIN_SPEED, WALK_MAX_SPEED)
+	
+	if is_on_floor() and Input.is_action_just_pressed("jump"):
+		velocity.y = -JUMP_SPEED
+		emit_signal("jumping")
+	
+	if is_on_ceiling():
+		velocity.y = 0
 
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+	position.x = clamp(position.x, 43, 317)

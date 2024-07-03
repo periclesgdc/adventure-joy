@@ -18,3 +18,6 @@ texture = ExtResource( 1 )
 position = Vector2( 0, -21.614 )
 scale = Vector2( 1.02746, 0.914655 )
 shape = SubResource( 1 )
+
+[node name="ItemSlot" type="Position2D" parent="."]
+position = Vector2( 0, -65.9341 )

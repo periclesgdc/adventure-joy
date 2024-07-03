@@ -4,11 +4,13 @@ extends Node
 export var min_platform_speed: int
 
 const platform01 = preload("res://scenes/Platform01.tscn")
+const collectible = preload("res://scenes/CollectibleItem.tscn")
 const min_distance = 600
 
 onready var spawn_line = Position2D.new()
 
 var platform_width = 0
+var score = 0
 
 func _ready():
 	var new_platform = platform01.instance()
@@ -23,10 +25,13 @@ func init_platforms():
 		add_child(new_platform)
 
 func _process(delta):
+	$CanvasLayer/Control/ScoreValue.text = str(score)
 	spawn_line.position.y = $Player.position.y - min_distance
 
 func spawn_platform():
 	var new_platform = create_platform(spawn_line.position)
+	
+	new_platform.spawn_collectible_item = !bool(randi() % 5)
 	
 	add_child_below_node($Platforms, new_platform)
 
@@ -48,3 +53,6 @@ func _on_Player_jumping():
 
 func _on_PlatformSpawner_timeout():
 	spawn_platform()
+
+func _on_Player_collected():
+	score += 1
