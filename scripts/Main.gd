@@ -33,10 +33,10 @@ func spawn_platform():
 	add_child_below_node($Platforms, new_platform)
 
 func create_platform(plat_position: Vector2):
+	position_seed = rand_seed(OS.get_unix_time())[1]
 	var new_platform = platform01.instance()
 	plat_position.x = platform_width * (randi() % 5) + 53
 	
-	position_seed = rand_seed(position_seed)[1]
 	
 	new_platform.position = plat_position
 	new_platform.fall_speed = min_platform_speed
@@ -49,3 +49,13 @@ func _on_PlatformSpawner_timeout():
 func _on_Player_collected():
 	score += 1
 	$CanvasLayer/Control/ScoreValue.text = str(score)
+
+func _on_Player_died():
+	print('died')
+	$Restarter.start()
+	
+	get_tree().paused = true
+
+func _on_Restarter_timeout():
+	get_tree().reload_current_scene()
+	get_tree().paused = false

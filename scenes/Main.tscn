@@ -72,6 +72,11 @@ tile_data = PoolIntArray( 655359, 1, 0, 589824, 1, 0, 589825, 1, 0, 589826, 1, 0
 wait_time = 2.0
 autostart = true
 
+[node name="Restarter" type="Timer" parent="."]
+pause_mode = 2
+wait_time = 3.0
+one_shot = true
+
 [node name="Platforms" type="Node" parent="."]
 
 [node name="SpawnerLayer" type="CanvasLayer" parent="."]
@@ -126,4 +131,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="timeout" from="PlatformSpawner" to="." method="_on_PlatformSpawner_timeout"]
+[connection signal="timeout" from="Restarter" to="." method="_on_Restarter_timeout"]
 [connection signal="collected" from="Player" to="." method="_on_Player_collected"]
+[connection signal="died" from="Player" to="." method="_on_Player_died"]
