@@ -7,16 +7,16 @@ const platform01 = preload("res://scenes/Platform01.tscn")
 const collectible = preload("res://scenes/CollectibleItem.tscn")
 const min_distance = 600
 
-onready var spawn_line = Position2D.new()
+onready var spawn_line = $SpawnerLayer/SpawnerPosition
 
 var platform_width = 0
 var score = 0
+var position_seed = 0
 
 func _ready():
 	var new_platform = platform01.instance()
 	platform_width = new_platform.get_node("Sprite").texture.get_width()
 	
-	add_child(spawn_line)
 	init_platforms()
 
 func init_platforms():
@@ -24,9 +24,6 @@ func init_platforms():
 		var new_platform = create_platform(Vector2(0, -200 * y - 100))
 		add_child(new_platform)
 
-func _process(delta):
-	$CanvasLayer/Control/ScoreValue.text = str(score)
-	spawn_line.position.y = $Player.position.y - min_distance
 
 func spawn_platform():
 	var new_platform = create_platform(spawn_line.position)
@@ -37,22 +34,18 @@ func spawn_platform():
 
 func create_platform(plat_position: Vector2):
 	var new_platform = platform01.instance()
-	plat_position.x = platform_width * int(rand_range(0, 5)) + 53
+	plat_position.x = platform_width * (randi() % 5) + 53
 	
-	rand_seed(plat_position.x)
+	position_seed = rand_seed(position_seed)[1]
 	
 	new_platform.position = plat_position
 	new_platform.fall_speed = min_platform_speed
 	
 	return new_platform
 
-func _on_Player_jumping():
-	$PlatformSpawner.stop()
-	spawn_platform()
-	$PlatformSpawner.start()
-
 func _on_PlatformSpawner_timeout():
 	spawn_platform()
 
 func _on_Player_collected():
 	score += 1
+	$CanvasLayer/Control/ScoreValue.text = str(score)

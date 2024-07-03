@@ -9,7 +9,6 @@ const WALK_MAX_SPEED = 200
 var velocity = Vector2.ZERO
 var direction = Vector2.ZERO
 
-signal jumping
 signal collected
 signal died
 
@@ -43,10 +42,10 @@ func _physics_process(delta):
 	
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y = -JUMP_SPEED
-		emit_signal("jumping")
 	
 	if is_on_ceiling():
 		velocity.y = 0
+	
 #	Verificar validade desse ponto
 	if is_on_ceiling() and is_on_floor():
 		print('morreu')

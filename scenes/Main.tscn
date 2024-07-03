@@ -74,8 +74,13 @@ autostart = true
 
 [node name="Platforms" type="Node" parent="."]
 
+[node name="SpawnerLayer" type="CanvasLayer" parent="."]
+
+[node name="SpawnerPosition" type="Position2D" parent="SpawnerLayer"]
+position = Vector2( 0, -600 )
+
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 187, 63 )
+position = Vector2( 187, 206.141 )
 z_index = 1
 collision/safe_margin = 0.01
 GRAVITY = 800
@@ -122,4 +127,3 @@ __meta__ = {
 }
 [connection signal="timeout" from="PlatformSpawner" to="." method="_on_PlatformSpawner_timeout"]
 [connection signal="collected" from="Player" to="." method="_on_Player_collected"]
-[connection signal="jumping" from="Player" to="." method="_on_Player_jumping"]
