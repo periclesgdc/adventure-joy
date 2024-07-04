@@ -4,7 +4,6 @@ extends Node
 export var min_platform_speed: int
 
 const platform01 = preload("res://scenes/Platform01.tscn")
-const collectible = preload("res://scenes/CollectibleItem.tscn")
 const game_over = preload("res://scenes/GameOverLabel.tscn")
 const min_distance = 600
 
@@ -54,7 +53,7 @@ func _on_PlatformSpawner_timeout():
 
 func _on_Player_collected():
 	score += 1
-	$CanvasLayer/Control/ScoreValue.text = str(score)
+	$HUD.update_score(score)
 
 func _on_Player_died():
 	var game_over_label = game_over.instance()

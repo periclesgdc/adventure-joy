@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scripts/HUD.gd" type="Script" id=1]
+[ext_resource path="res://fonts/LuckiestGuy-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://sprites/Tiles/platformPack_tile040.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=2]
+size = 21
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 35
+font_data = ExtResource( 2 )
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+grow_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprites" type="Node2D" parent="Control"]
+modulate = Color( 1, 1, 1, 0.780392 )
+
+[node name="Bg" type="Sprite" parent="Control/Sprites"]
+position = Vector2( 53, 32.2377 )
+texture = ExtResource( 3 )
+
+[node name="Bg2" type="Sprite" parent="Control/Sprites"]
+position = Vector2( 116.444, 32 )
+texture = ExtResource( 3 )
+
+[node name="Bg3" type="Sprite" parent="Control/Sprites"]
+position = Vector2( 179.666, 32.4596 )
+texture = ExtResource( 3 )
+
+[node name="ScoreLabel" type="Label" parent="Control"]
+margin_left = 40.0
+margin_top = 23.5969
+margin_right = 105.0
+margin_bottom = 45.5969
+custom_fonts/font = SubResource( 2 )
+text = "Score:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreValue" type="Label" parent="Control"]
+margin_left = 111.181
+margin_top = 18.7201
+margin_right = 151.181
+margin_bottom = 54.7201
+custom_fonts/font = SubResource( 3 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
