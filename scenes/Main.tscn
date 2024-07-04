@@ -4,20 +4,9 @@
 [ext_resource path="res://scenes/TileMap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Main.gd" type="Script" id=3]
 [ext_resource path="res://sprites/Tiles/platformPack_tile004.png" type="Texture" id=4]
-[ext_resource path="res://sprites/Preview.png" type="Texture" id=5]
+[ext_resource path="res://scenes/CloudParticle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://fonts/LuckiestGuy-Regular.ttf" type="DynamicFontData" id=6]
-
-[sub_resource type="TileSet" id=1]
-0/name = "Preview.png 0"
-0/texture = ExtResource( 5 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 64, 64, 64 )
-0/tile_mode = 0
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shapes = [  ]
-0/z_index = 0
+[ext_resource path="res://sprites/Tiles/platformPack_tile040.png" type="Texture" id=7]
 
 [sub_resource type="TileSet" id=2]
 0/name = "platformPack_tile004.png 0"
@@ -48,11 +37,32 @@ min_platform_speed = 100
 [node name="Bg" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_mirroring = Vector2( 0, 600 )
 
-[node name="TileBg" type="TileMap" parent="ParallaxBackground/Bg"]
-position = Vector2( 21, 0 )
-tile_set = SubResource( 1 )
-format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 196612, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 589824, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0, 589828, 0, 0 )
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/Bg"]
+margin_right = 360.0
+margin_bottom = 640.0
+color = Color( 0.2, 0.6, 0.854902, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clouds" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.3, 0.2 )
+motion_mirroring = Vector2( 360, 640 )
+
+[node name="CloudParticle2" parent="ParallaxBackground/Clouds" instance=ExtResource( 5 )]
+position = Vector2( -31.8091, 206.141 )
+
+[node name="CloudParticle3" parent="ParallaxBackground/Clouds" instance=ExtResource( 5 )]
+position = Vector2( 187, 37 )
+
+[node name="CloudParticle4" parent="ParallaxBackground/Clouds" instance=ExtResource( 5 )]
+position = Vector2( 332.699, 254.141 )
+
+[node name="CloudParticle5" parent="ParallaxBackground/Clouds" instance=ExtResource( 5 )]
+position = Vector2( 91.7926, 395.342 )
+
+[node name="CloudParticle6" parent="ParallaxBackground/Clouds" instance=ExtResource( 5 )]
+position = Vector2( 287.258, 502.13 )
 
 [node name="Walls" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_mirroring = Vector2( 0, 600 )
@@ -74,7 +84,7 @@ autostart = true
 
 [node name="Restarter" type="Timer" parent="."]
 pause_mode = 2
-wait_time = 3.0
+wait_time = 4.0
 one_shot = true
 
 [node name="Platforms" type="Node" parent="."]
@@ -109,11 +119,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprites" type="Node2D" parent="CanvasLayer/Control"]
+modulate = Color( 1, 1, 1, 0.780392 )
+
+[node name="Bg" type="Sprite" parent="CanvasLayer/Control/Sprites"]
+position = Vector2( 53, 32.2377 )
+texture = ExtResource( 7 )
+
+[node name="Bg2" type="Sprite" parent="CanvasLayer/Control/Sprites"]
+position = Vector2( 116.444, 32 )
+texture = ExtResource( 7 )
+
+[node name="Bg3" type="Sprite" parent="CanvasLayer/Control/Sprites"]
+position = Vector2( 179.666, 32.4596 )
+texture = ExtResource( 7 )
+
 [node name="ScoreLabel" type="Label" parent="CanvasLayer/Control"]
-margin_left = 26.7926
-margin_top = 15.0
-margin_right = 76.7926
-margin_bottom = 32.0
+margin_left = 40.0
+margin_top = 23.5969
+margin_right = 105.0
+margin_bottom = 45.5969
 custom_fonts/font = SubResource( 3 )
 text = "Score:"
 __meta__ = {
@@ -121,10 +146,10 @@ __meta__ = {
 }
 
 [node name="ScoreValue" type="Label" parent="CanvasLayer/Control"]
-margin_left = 97.9735
-margin_top = 10.1232
-margin_right = 137.974
-margin_bottom = 46.1232
+margin_left = 111.181
+margin_top = 18.7201
+margin_right = 151.181
+margin_bottom = 54.7201
 custom_fonts/font = SubResource( 4 )
 text = "0"
 __meta__ = {

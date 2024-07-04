@@ -5,6 +5,7 @@ export var min_platform_speed: int
 
 const platform01 = preload("res://scenes/Platform01.tscn")
 const collectible = preload("res://scenes/CollectibleItem.tscn")
+const game_over = preload("res://scenes/GameOverLabel.tscn")
 const min_distance = 600
 
 onready var spawn_line = $SpawnerLayer/SpawnerPosition
@@ -56,7 +57,9 @@ func _on_Player_collected():
 	$CanvasLayer/Control/ScoreValue.text = str(score)
 
 func _on_Player_died():
-	print('died')
+	var game_over_label = game_over.instance()
+	add_child(game_over_label)
+	
 	$Restarter.start()
 	
 	get_tree().paused = true
