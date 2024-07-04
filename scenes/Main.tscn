@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/TileMap.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://sprites/Tiles/platformPack_tile004.png" type="Texture" id=4]
 [ext_resource path="res://scenes/CloudParticle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/PlatformSpawner.tscn" type="PackedScene" id=7]
 
 [sub_resource type="TileSet" id=1]
 0/name = "platformPack_tile004.png 0"
@@ -21,7 +22,6 @@
 
 [node name="Main" type="Node"]
 script = ExtResource( 3 )
-min_platform_speed = 100
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -66,24 +66,16 @@ tile_data = PoolIntArray( 65535, 0, 0, 5, 0, 0, 131071, 0, 0, 65541, 0, 0, 19660
 position = Vector2( 21, 0 )
 tile_data = PoolIntArray( 655359, 1, 0, 589824, 1, 0, 589825, 1, 0, 589826, 1, 0, 589827, 1, 0, 589828, 1, 0, 589829, 1, 0 )
 
-[node name="PlatformSpawner" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true
+[node name="PlatformSpawner" parent="." instance=ExtResource( 7 )]
+min_platform_speed = 100
 
 [node name="Restarter" type="Timer" parent="."]
 pause_mode = 2
 wait_time = 4.0
 one_shot = true
 
-[node name="Platforms" type="Node" parent="."]
-
-[node name="SpawnerLayer" type="CanvasLayer" parent="."]
-
-[node name="SpawnerPosition" type="Position2D" parent="SpawnerLayer"]
-position = Vector2( 0, -600 )
-
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 187, 206.141 )
+position = Vector2( 187, 364.584 )
 z_index = 1
 collision/safe_margin = 0.01
 GRAVITY = 800
@@ -98,7 +90,7 @@ limit_smoothed = true
 smoothing_enabled = true
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]
-[connection signal="timeout" from="PlatformSpawner" to="." method="_on_PlatformSpawner_timeout"]
+[connection signal="checkpoint" from="PlatformSpawner" to="." method="_on_PlatformSpawner_checkpoint"]
 [connection signal="timeout" from="Restarter" to="." method="_on_Restarter_timeout"]
 [connection signal="collected" from="Player" to="." method="_on_Player_collected"]
 [connection signal="died" from="Player" to="." method="_on_Player_died"]
