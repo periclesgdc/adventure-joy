@@ -51,7 +51,6 @@ func _physics_process(delta):
 	
 	if is_on_ceiling():
 		death_coundown -= 1 * delta
-		velocity.y = 0
 	else:
 		death_coundown = 3
 
