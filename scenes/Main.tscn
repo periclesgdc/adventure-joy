@@ -41,16 +41,16 @@ motion_scale = Vector2( 0.3, 0.2 )
 motion_mirroring = Vector2( 360, 640 )
 
 [node name="CloudParticle2" parent="ParallaxBackground/Clouds" instance=ExtResource( 5 )]
-position = Vector2( -31.8091, 206.141 )
+position = Vector2( -327.404, 233.141 )
 
 [node name="CloudParticle3" parent="ParallaxBackground/Clouds" instance=ExtResource( 5 )]
-position = Vector2( 187, 37 )
+position = Vector2( -108.594, 64 )
 
 [node name="CloudParticle5" parent="ParallaxBackground/Clouds" instance=ExtResource( 5 )]
-position = Vector2( 278.393, 364.584 )
+position = Vector2( -17.2014, 391.584 )
 
 [node name="CloudParticle6" parent="ParallaxBackground/Clouds" instance=ExtResource( 5 )]
-position = Vector2( 84.444, 491.877 )
+position = Vector2( -211.15, 518.877 )
 
 [node name="Walls" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_mirroring = Vector2( 0, 600 )

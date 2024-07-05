@@ -25,4 +25,4 @@ func _on_Restarter_timeout():
 	get_tree().paused = false
 
 func _on_PlatformSpawner_checkpoint(height):
-	print(height)
+	$HUD.update_height(height)

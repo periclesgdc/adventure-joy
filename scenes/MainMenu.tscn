@@ -1,0 +1,127 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://fonts/LuckiestGuy-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://sprites/Characters/platformChar_happy.png" type="Texture" id=2]
+[ext_resource path="res://scenes/TileMap.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/MainMenu.gd" type="Script" id=4]
+[ext_resource path="res://scenes/TransitionScene.tscn" type="PackedScene" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 60
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 36
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "effects"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Player:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( -1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Control/Title3:custom_fonts/font:outline_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 5 ]
+}
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 360.0
+margin_bottom = 640.0
+color = Color( 0.2, 0.6, 0.854902, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TileMap" parent="." instance=ExtResource( 3 )]
+modulate = Color( 0.815686, 1, 0.631373, 1 )
+position = Vector2( 21, 0 )
+z_index = 1
+tile_data = PoolIntArray( 65535, 2, 0, 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 131071, 2, 0, 65537, 2, 0, 65538, 2, 0, 65539, 2, 0, 65540, 2, 0, 65541, 2, 0, 196607, 2, 0, 131074, 2, 0, 131075, 2, 0, 131076, 2, 0, 131077, 2, 0, 262143, 2, 0, 196612, 2, 0, 196613, 2, 0, 327679, 2, 0, 262149, 2, 0, 393215, 2, 0, 327685, 2, 0, 458751, 2, 0, 393221, 2, 0, 524287, 2, 0, 458756, 2, 0, 458757, 2, 0, 589823, 2, 0, 524288, 2, 0, 524292, 2, 0, 524293, 2, 0, 655359, 2, 0, 589824, 2, 0, 589825, 2, 0, 589826, 2, 0, 589827, 2, 0, 589828, 2, 0, 589829, 2, 0 )
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Control"]
+modulate = Color( 1, 0.968627, 0.235294, 1 )
+margin_left = 71.5
+margin_top = 174.164
+margin_right = 387.5
+margin_bottom = 237.164
+rect_rotation = 30.0
+custom_fonts/font = SubResource( 1 )
+text = "ADVENTURE"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title2" type="Label" parent="Control"]
+modulate = Color( 1, 0.968627, 0.235294, 1 )
+margin_left = 181.992
+margin_top = 295.728
+margin_right = 386.992
+margin_bottom = 358.728
+rect_rotation = 30.0
+custom_fonts/font = SubResource( 1 )
+text = "JOY"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title3" type="Label" parent="Control"]
+margin_left = 77.089
+margin_top = 491.14
+margin_right = 282.089
+margin_bottom = 554.14
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "PRESS
+ENTER"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" type="Sprite" parent="."]
+position = Vector2( 103.134, 379.217 )
+texture = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "effects"
+anims/effects = SubResource( 2 )
+
+[node name="TransitionScene" parent="." instance=ExtResource( 5 )]
+[connection signal="finished" from="TransitionScene" to="." method="_on_TransitionScene_finished"]
